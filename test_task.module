@@ -1,0 +1,55 @@
+<?php
+/**
+ * Implements hook_menu()
+ */
+
+function test_task_menu() {
+    $items = array();
+
+    $items['test_task/new-test'] = array(
+        'title' => t('Тестовое задание на Drupal'),
+        'description' => 'Ваша команда',
+        'page callback' => 'drupal_get_form',
+        'page arguments' => array('test_task_form'),
+        'access arguments' => array('access administration pages'),
+        'type' => MENU_NORMAL_ITEM,
+    );
+
+    return $items;
+}
+
+/**
+ * Implements hook_form()
+ */
+function test_task_form($form, &$form_state) {
+    $options = array(
+        'a' => 'Леопольд',
+        'b' => 'Карлсон',
+        'c' => 'Дядя Федор',
+        'd' => 'Матроскин',
+        'e' => 'Попугай Кеша',
+        'f' => 'Чебурашка',
+        'g' => 'Пятачок',
+        'h' => 'Капитан Врунгель',
+        'i' => 'Трубадур',
+    );
+
+    $form['test_task'] = array(
+        '#type' => 'checkboxes',
+        '#title' => 'Члены Вашей команды',
+        '#description' => 'Выберите не больше трех',
+        '#options' => $options,
+    );
+
+    $form['test_task_result'] = array(
+        '#markup' => '<h3>Ваша команда:</h3><p class="team-members"><strong></strong></p>',
+    );
+
+    return $form;
+}
+
+/**
+ *
+ */
+
+drupal_add_js(drupal_get_path('module', 'test_task') . '/js/script.js');
